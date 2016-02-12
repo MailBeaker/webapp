@@ -1,0 +1,95 @@
+<div class="page-header clearfix">
+    <h1>Rules</h1>
+    <a class="btn btn-primary pull-right" data-ng-click="openAddRuleDialog()">
+        <span class="fa fa-plus"></span> Add Rule
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table div-table">
+            <thead>
+                <tr class="nocursor">
+                    <th>Description</th>
+                    <th style="width:140px;">Action</th>
+                    <th style="width:140px;">Notify Admins?</th>
+                    <th style="width:96px">Actions</th>
+                </tr>
+            </thead>
+        </table>
+        <div>
+            <div data-ng-repeat="rule in rules">
+                <table class="table div-table">
+                    <tbody>
+                        <tr>
+                            <td data-ng-click="expandCollapseRule(rule)">
+                                {{ rule.description }}
+                            </td>
+                            <td style="width:140px;" data-ng-click="expandCollapseRule(rule)">
+                                {{ getActionVerbose(rule.action) }}
+                            </td>
+                            <td style="width:140px; font-weight: bold;" data-ng-if="rule.alert_admins == true" data-ng-click="expandCollapseRule(rule)">
+                                Yes
+                            </td>
+                            <td style="width:140px;" data-ng-if="rule.alert_admins == false" data-ng-click="expandCollapseRule(rule)">
+                                No
+                            </td>
+                            <td style="width:96px;">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default" data-ng-click="openEditRuleDialog(rule)">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-ng-click="deleteRule(rule)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-left: 50px;" data-ng-show="rule.expanded">
+                    <div data-ng-if="rule.sender_mod > 0">
+                        * Sender address {{ getModSentenceForm(rule.sender_mod) }} <span style="font-style: italic;">{{ rule.sender_value }}</span>
+                    </div>
+                    <div data-ng-if="rule.receiver_mod > 0">
+                        * Destination address {{ getModSentenceForm(rule.receiver_mod) }} <span style="font-style: italic;">{{ rule.receiver_value }}</span>
+                    </div>
+                    <div data-ng-if="rule.subject_mod > 0">
+                        * Subject {{ getModSentenceForm(rule.subject_mod) }} <span style="font-style: italic;">{{ rule.subject_value }}</span>
+                    </div>
+                    <div data-ng-if="rule.url_mod > 0">
+                        * URL {{ getModSentenceForm(rule.url_mod) }} <span style="font-style: italic;">{{ rule.url_value }}</span>
+                    </div>
+                    <div data-ng-if="rule.body_mod > 0">
+                        * Body text {{ getModSentenceForm(rule.body_mod) }} <span style="font-style: italic;">{{ rule.body_value }}</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <nav data-ng-show="numPages > 0">
+            <ul class="pagination">
+                <li data-ng-class="{disabled: pageNumber == 1}">
+                    <a data-ng-href="{{ getPageNavLink(1) }}">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li data-ng-class="{active: pageNumber == i}" data-ng-repeat="i in getPageNumbers(numPages)">
+                    <a data-ng-href="{{ getPageNavLink(i) }}">{{ i }}</a>
+                </li>
+                <li data-ng-class="{disabled: pageNumber == numPages}">
+                    <a data-ng-href="{{ getPageNavLink(numPages) }}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+</div>

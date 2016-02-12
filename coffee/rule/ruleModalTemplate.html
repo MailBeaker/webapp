@@ -1,0 +1,135 @@
+<form class="form-horizontal" role="form">
+    <div class="modal-header">
+        <button type="button" class="close" data-ng-click="closeRuleDialog()">&times;</button>
+        <h4 class="modal-title" id="dialog-heading" data-ng-show="editingRule === false">Create New Rule</h4>
+        <h4 class="modal-title" id="dialog-heading" data-ng-show="editingRule === true">Edit Rule</h4>
+    </div>
+    <div class="modal-body">
+        <div id="dialog-data">
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="description">Description:</label>
+                <div class="col-sm-9 controls">
+                    <input type="text" id="description" class="form-control input-sm" placeholder="Always allow messages from our subsidiary" data-ng-model="newRule.description">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="id-sender">Sender E-mail:</label>
+                <div class="col-sm-4">
+                    <select class="form-control input-sm" data-ng-model="newRule.sender_mod">
+                        <option value="0">Not Defined</option>
+                        <option value="1">Equal to</option>
+                        <option value="2">Not equal to</option>
+                        <option value="3">Contains</option>
+                        <option value="4">Does not contain</option>
+                        <option value="5">Starts with</option>
+                        <option value="6">Ends with</option>
+                    </select>
+                </div>
+                <div class="col-sm-5">
+                    <input type="text" id="id-sender" class="form-control input-sm" placeholder="trusted.vendor@example.com" data-ng-model="newRule.sender_value">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="id-receiver">Receiver E-mail:</label>
+                <div class="col-sm-4">
+                    <select class="form-control input-sm" data-ng-model="newRule.receiver_mod">
+                        <option value="0">Not Defined</option>
+                        <option value="1">Equal to</option>
+                        <option value="2">Not equal to</option>
+                        <option value="3">Contains</option>
+                        <option value="4">Does not contain</option>
+                        <option value="5">Starts with</option>
+                        <option value="6">Ends with</option>
+                    </select>
+                </div>
+                <div class="col-sm-5">
+                    <input type="text" id="id-receiver" class="form-control input-sm" placeholder="john.doe@example.com" data-ng-model="newRule.receiver_value">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="id-subject">Subject:</label>
+                <div class="col-sm-4">
+                    <select class="form-control input-sm" data-ng-model="newRule.subject_mod">
+                        <option value="0">Not Defined</option>
+                        <option value="1">Equal to</option>
+                        <option value="2">Not equal to</option>
+                        <option value="3">Contains</option>
+                        <option value="4">Does not contain</option>
+                        <option value="5">Starts with</option>
+                        <option value="6">Ends with</option>
+                    </select>
+                </div>
+                <div class="col-sm-5">
+                    <input type="text" id="id-subject" class="form-control input-sm" placeholder="Verify Your Password" data-ng-model="newRule.subject_value">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="id-url">Link Destination:</label>
+                <div class="col-sm-4">
+                    <select name="url_mod" class="form-control input-sm" data-ng-model="newRule.url_mod">
+                        <option value="0">Not Defined</option>
+                        <option value="1">Equal to</option>
+                        <option value="2">Not equal to</option>
+                        <option value="3">Contains</option>
+                        <option value="4">Does not contain</option>
+                        <option value="5">Starts with</option>
+                        <option value="6">Ends with</option>
+                    </select>
+                </div>
+                <div class="col-sm-5">
+                    <input type="text" id="id-url" class="form-control input-sm" placeholder="http://example.com/evil/" data-ng-model="newRule.url_value">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="id-body">Message Body:</label>
+                <div class="col-sm-4">
+                    <select class="form-control input-sm" data-ng-model="newRule.body_mod">
+                        <option value="0">Not Defined</option>
+                        <option value="3">Contains</option>
+                        <option value="4">Does not contain</option>
+                    </select>
+                </div>
+                <div class="col-sm-5">
+                    <input type="text" id="id-body" class="form-control input-sm" placeholder="Voldemort" data-ng-model="newRule.body_value">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="id-action">
+                    Action:<span class="required-indicator">&nbsp;</span>
+                </label>
+                <div class="col-sm-4">
+                    <select class="form-control input-sm" id="id-action" data-ng-model="newRule.action">
+                        <option value="0">Pass</option>
+                        <option value="1">Warn</option>
+                        <option value="2">Block</option>
+                    </select>
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <div class="checkbox">
+                        <label>
+                            <input id="alert_admins" type="checkbox" data-ng-model="newRule.alert_admins">
+                            Send an e-mail to Administrators if this rule matches an incoming message.
+                            <span class="required-indicator">&nbsp;</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-default" data-ng-click="closeRuleDialog()">Cancel</a>
+        <button type="submit" class="btn btn-primary"
+                data-ng-click="createNewRule(newRule)"
+                data-ng-disabled="newRuleDisableSubmit"
+                data-ng-show="editingRule === false">Save New Rule</button>
+        <button type="submit" class="btn btn-primary"
+                data-ng-click="editRule(newRule)"
+                data-ng-disabled="newRuleDisableSubmit"
+                data-ng-show="editingRule === true">Update Rule</button>
+    </div>
+</form>

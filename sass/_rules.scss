@@ -1,0 +1,11 @@
+.div-table {
+  margin-bottom: 0;
+
+  tr.nocursor {
+    cursor: default;
+  }
+
+  tbody tr {
+    cursor: pointer;
+  }
+}

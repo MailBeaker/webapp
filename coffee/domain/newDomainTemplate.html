@@ -1,0 +1,51 @@
+<div class="page-header">
+    <h1>New Domain</h1>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        You must fill out this form for each domain name that you operate email on in order for them to be handled by MailBeaker.
+        For example, if you have email addresses <span class="italic">bob@acme.com</span> and <span class="italic">alice@email.acme.com</span>
+        you will need to add both the <span class="italic">acme.com</span> and <span class="italic">email.acme.com</span> domains.
+    </div>
+</div>
+<div class="row" style="margin-top: 30px;">
+    <div class="col-sm-6 col-sm-offset-3">
+        <form class="form-horizontal" role="form" data-ng-submit="formSubmitted(domain)">
+            <div class="form-group">
+                <label for="inputDomain" class="col-sm-3 control-label">Domain</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputDomain" placeholder="Domain"
+                           data-ng-model="domain.domain_name"
+                           data-ng-blur="domainBlur(domain.domain_name)">
+                    <span class="fa fa-spinner fa-spin input-throbber"
+                          data-ng-show="lookingUpMx"></span>
+                </div>
+            </div>
+
+            <div class="form-group" data-ng-repeat="record in domain.records">
+                <label class="col-sm-3 control-label" data-ng-if="$index === 0">MX Records</label>
+                <label class="col-sm-3 control-label" data-ng-if="$index != 0"></label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Hostname"
+                           data-ng-model="record.hostname">
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="Priority"
+                           data-ng-model="record.priority">
+                </div>
+            </div>
+
+            <div class="form-group" data-ng-show="domain.records.length > 0">
+                <div class="col-sm-offset-3">
+                    <a class="btn" data-ng-click="addMxRecord()">+ Add MX Record</a>
+                </div>
+            </div>
+
+            <div class="form-group" data-ng-show="domain.records.length > 0">
+                <div class="col-sm-offset-9 col-sm-3">
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
